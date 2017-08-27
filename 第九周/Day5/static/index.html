@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <!-- / 根路径 -->
-    <link rel="stylesheet" href="/public/index.css">
+    <!--<link rel="stylesheet" href="/public/index.css">-->
 </head>
 <body>
 <h3> hello world! 你好 珠峰</h3>
@@ -16,8 +16,8 @@
     <button type="button" id="btn">提交</button>
 </form>
 <p id="user"></p>
-<script type="text/javascript" src="/public/index.js"></script>
-<script type="text/javascript" src="/public/ajax.js"></script>
+<!--<script type="text/javascript" src="/public/index.js"></script>-->
+<script type="text/javascript" src="./public/ajax.js"></script>
 <script type="text/javascript">
        let btn = document.querySelector('#btn');
        let username = document.querySelector('#username');
@@ -31,7 +31,7 @@
                return;
            }
            $$.ajax({
-               url: '/addUser',
+               url: 'http://127.0.0.1:8010/addUser',
                type: 'POST',
                dataType: 'json',
                data: {
