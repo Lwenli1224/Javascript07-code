@@ -57,6 +57,14 @@
 //      console.log(newArr);
 
 
+    let a = b = {n: 1};
+    a.c = a = {z: 5};
+    console.log(a, b);
+
+//  正常从右往左赋值顺序  '.'运算符赋值优先级高
+
+
+
 </script>
 </body>
 </html>
