@@ -8,23 +8,28 @@
             margin: 0;
             padding: 0;
         }
+
         ul {
             list-style: none;
         }
+
         a {
             text-decoration: none;
         }
+
         #container {
             width: 403px;
             margin: 20px auto;
             border: 1px solid black;
             -webkit-user-select: none;
         }
+
         #container p {
             background-color: #2C8DFB;
             border-bottom: 2px solid black;
         }
-        #container p span, .users li span{
+
+        #container p span, .users li span {
             display: inline-block;
             color: #fff;
             width: 100px;
@@ -32,17 +37,21 @@
             line-height: 30px;
             text-align: center;
         }
+
         #container p span:not(:nth-of-type(4)), .users li span:not(:nth-of-type(4)) {
             border-right: 1px solid black;
         }
-        .users li{
+
+        .users li {
             overflow: hidden;
             border-bottom: 2px solid black;
         }
+
         .users li span {
             color: black;
             float: left;
         }
+
         .users li span a {
             color: #2C8DFB;
         }
@@ -76,8 +85,8 @@
     $$.ajax({
         url: '/getUserInfo',
         dataType: 'json',
-        success(res){
-            if(res.errno === 0) {
+        success(res) {
+            if (res.errno === 0) {
                 let {data} = res;
                 bindData(data);
             }
@@ -93,13 +102,36 @@
             <span>${item.name}</span>
             <span>${item.tel}</span>
             <span>
-                <a href="">修改</a>
-                <a href="">删除</a>
+                <a href=/pages/updateUser.html?id=${item.id}>修改</a>
+                <a  class="removeBtn" href="javascript:;" rid=${item.id}>删除</a>
             </span>
             </li>
             `
         });
         users.innerHTML = str;
+    }
+
+    users.onclick = function (e) {
+        e = e || window.event;
+        let tar = e.target || e.srcElement;
+        if(tar.className === 'removeBtn') {
+             let flag = confirm('是否确认删除？');
+             if(!flag) return;
+             let rid = tar.getAttribute('rid');
+             $$.ajax({
+                 url: '/removeUserInfo',
+                 data: {
+                     id: rid
+                 },
+                 dataType: 'json',
+                 success(res) {
+                     if(res.errno === 0) {
+                         users.removeChild(tar.parentNode.parentNode);
+                         alert(res.msg);
+                     }
+                 }
+             })
+        }
     }
 </script>
 </body>

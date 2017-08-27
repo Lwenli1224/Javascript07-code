@@ -25,7 +25,7 @@
 </head>
 <body>
 <a href="/"><< 返回用户列表</a>
-<h3>添加用户</h3>
+<h3>修改用户</h3>
 <form id="form">
     <p>
         <label for="username">用户名：</label>
@@ -35,39 +35,70 @@
         <label for="tel">TEL：</label>
         <input type="text" id="tel">
     </p>
-    <button type="button" id="addBtn">添加用户</button>
+    <button type="button" id="updateBtn">修改用户</button>
 </form>
 <script type="text/javascript" src="/js/ajax.js"></script>
 <script type="text/javascript">
-    let addBtn = document.querySelector('#addBtn');
+    let updateBtn = document.querySelector('#updateBtn');
     let username = document.querySelector('#username');
     let tel = document.querySelector('#tel');
-    addBtn.onclick = function () {
+    let query = getQueryParam(window.location.href);
+    updateBtn.onclick = function () {
         let nameVal = username.value;
         let telVal = tel.value;
         let reg = /^\s*$/;
-        if (reg.test(nameVal) || reg.test(telVal)) {
-            alert('请将用户信息填写完整！');
-            return;
+        if(reg.test(nameVal) || reg.test(telVal)){
+        alert('修改内容不能为空！');
+        return;
         }
-
         $$.ajax({
-            url: '/addUserInfo',
+            url: '/updateUserInfo',
             type: 'POST',
             data: {
+                id: query.id,
                 name: nameVal,
                 tel: telVal
             },
             dataType: 'json',
             success(res) {
-                if (res.errno === 0) {
-                    tel.value = username.value = '';
+                if(res.errno === 0) {
                     alert(res.msg);
-                    window.location.href = '/';
                 }
             }
         })
     };
+
+
+
+    // http://127.0.0.1:7070/pages/updateUser.html?id=2
+    function getQueryParam(url) {
+        let param = {};
+        let reg = /([^?&=]+)=([^?&=]+)/g;
+        url.replace(reg, (a, b, c) => {
+            param[b] = c;
+        });
+        return param;
+    }
+
+
+    // 根据id获取用户信息
+    $$.ajax({
+        url: '/getUserInfo',
+        data: {
+            id: query.id
+        },
+        dataType: 'json',
+        success(res) {
+            if(res.errno === 0) {
+                let [user] = res.data;
+                username.value = user.name;
+                tel.value = user.tel;
+            }
+        }
+    });
+
+
+
 </script>
 </body>
 </html>
