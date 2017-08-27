@@ -8,6 +8,55 @@
 </head>
 <body>
 <h3> hello world! 你好 珠峰</h3>
+<form>
+    <label for="username">用户名：</label>
+    <input type="text" id="username">
+    <label for="password">密码：</label>
+    <input type="password" id="password">
+    <button type="button" id="btn">提交</button>
+</form>
+<p id="user"></p>
 <script type="text/javascript" src="/public/index.js"></script>
+<script type="text/javascript" src="/public/ajax.js"></script>
+<script type="text/javascript">
+       let btn = document.querySelector('#btn');
+       let username = document.querySelector('#username');
+       let userpassword = document.querySelector('#password');
+       btn.onclick = function () {
+           let name = username.value;
+           let password = userpassword.value;
+           let reg = /^\s*$/;
+           if(reg.test(name) || reg.test(password)) {
+               alert('信息请填写完整~');
+               return;
+           }
+           $$.ajax({
+               url: '/addUser',
+               type: 'POST',
+               dataType: 'json',
+               data: {
+                   name,
+                   password
+               },
+               success(res) {
+                  if(res.errno === 0) {
+                      console.log(res);
+                      let [data] = res.data;
+                      user.innerHTML = `id：${data.id} - name：${data.name} - password：${data.password}`
+                  }
+               }
+           })
+       };
+       
+//       let obj = {errno:0, data: [{name: 'lwl', id: 20},[100]]};
+//       let [,a] = obj.data;
+////       console.log(item);
+//       console.log(a);
+//      let arr =  [100, 200, 300,400,500];
+//      let [...newArr] = arr;
+//      console.log(newArr);
+
+
+</script>
 </body>
 </html>
