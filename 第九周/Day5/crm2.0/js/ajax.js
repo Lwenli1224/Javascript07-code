@@ -96,11 +96,12 @@
         xhr.timeout = timeout;
         xhr.onerror = xhr.ontimeout = error;
         xhr.onreadystatechange = function () {
-            if(this.readyState === 4 && /^2\d{2}$/.test(this.status)) {
-                typeof success === 'function'? success.call(context, this.response) : null;
+            if (this.readyState === 4 && /^2\d{2}$/.test(this.status)) {
+                typeof success === 'function' ? success.call(context, this.response) : null;
             }
         };
         xhr.send(JSON.stringify(data));
     }
+
     window.$$ = {ajax};
 })();
