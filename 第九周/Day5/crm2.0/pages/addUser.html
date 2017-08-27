@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        a {
+            text-decoration: none;
+        }
+         #form {
+             width: 250px;
+             margin: 20px auto;
+             text-align: center;
+         }
+        #form p{
+            text-align: right;
+        }
+        #form button {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<a href="/"><< 返回用户列表</a>
+<h3>添加用户</h3>
+<form id="form">
+    <p>
+        <label for="username">用户名：</label>
+        <input type="text" id="username">
+    </p>
+    <p>
+        <label for="tel">TEL：</label>
+        <input type="text" id="tel">
+    </p>
+    <button type="button" id="addBtn">添加用户</button>
+</form>
+<script type="text/javascript" src="/js/ajax.js"></script>
+<script type="text/javascript">
+    let addBtn = document.querySelector('#addBtn');
+    let username = document.querySelector('#username');
+    let tel = document.querySelector('#tel');
+    addBtn.onclick = function () {
+        let nameVal = username.value;
+        let telVal = tel.value;
+        let reg = /^\s*$/;
+        if(reg.test(nameVal) || reg.test(telVal)) {
+           alert('请将用户信息填写完整！');
+           return;
+        }
+        
+        $$.ajax({
+            url: '/addUserInfo',
+            type: 'POST',
+            data: {
+                name: nameVal,
+                tel: telVal
+            },
+            dataType: 'json',
+            success(res){
+                if(res.errno === 0) {
+                    tel.value = username.value = '';
+                    alert(res.msg);
+                }
+            }
+        })
+    };
+</script>
+</body>
+</html>

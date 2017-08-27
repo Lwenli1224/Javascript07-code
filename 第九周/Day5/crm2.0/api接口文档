@@ -1,0 +1,15 @@
+/getUserInfo  获取所有用户信息/获取单个用户信息
+return
+{"error": 0, "msg": "success", "data": ["id":1, "name": "crm", "tel": 13221312331]};
+
+/addUserInfo  增加用户信息
+return
+{"error": 0, "msg": "用户添加成功"};
+
+/removeUserInfo 删除用户信息
+return
+{"error": 0, "msg": "用户删除成功"};
+
+/updateUserInfo 修改用户信息
+return
+{"error": 0, "msg": "用户信息修改成功"};
